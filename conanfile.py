@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from conans import ConanFile, AutoToolsBuildEnvironment, tools
-import os
+import os, platform
 
 
 class LibnameConan(ConanFile):
@@ -49,7 +49,8 @@ class LibnameConan(ConanFile):
 
     def build(self):
         with tools.chdir(self.source_subfolder):
-            env_build = AutoToolsBuildEnvironment(self)
+            in_win = platform.system() == "Windows"
+            env_build = AutoToolsBuildEnvironment(self, win_bash=in_win)
             if self.settings.os != 'Windows':
                 env_build.fpic = self.options.fPIC
             env_build.configure()
