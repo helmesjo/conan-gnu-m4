@@ -34,6 +34,10 @@ class LibnameConan(ConanFile):
 
     requires = ()
 
+    def requirements(self):
+        if tools.os_info.is_windows:
+            self.requires.add("cygwin_installer/2.9.0@bincrafters/stable")
+
     def config_options(self):
         if self.settings.os == 'Windows':
             del self.options.fPIC
@@ -44,23 +48,31 @@ class LibnameConan(ConanFile):
         tools.get("{0}/m4-{1}.tar.gz".format(source_url, self.version))
         extracted_dir = self.name + "-" + self.version
         
-        #Rename to "source_subfolder" is a convention to simplify later steps
+        # Rename to "source_subfolder" is a convention to simplify later steps
         os.rename(extracted_dir, self.source_subfolder)
+
+    def configure_autotools(self):
+        env_build = AutoToolsBuildEnvironment(self, win_bash=tools.os_info.is_windows)
+        if not tools.os_info.is_windows:
+            env_build.fpic = self.options.fPIC
+        return env_build
 
     def build(self):
         with tools.chdir(self.source_subfolder):
-            in_win = platform.system() == "Windows"
-            env_build = AutoToolsBuildEnvironment(self, win_bash=in_win)
-            if self.settings.os != 'Windows':
-                env_build.fpic = self.options.fPIC
-            env_build.configure()
-            env_build.make()
+            env_build = self.configure_autotools()
+            if tools.os_info.is_windows:
+                vs_path = tools.vcvars_dict(self.settings)["PATH"]
+                tools.run_in_windows_bash(self, "./configure", env={"PATH": vs_path}, subsystem="cygwin")
+                tools.run_in_windows_bash(self, "./make", env={"PATH": vs_path}, subsystem="cygwin")
+            else:
+                env_build.configure()
+                env_build.make()
 
     def package(self):
         self.copy(pattern="LICENSE", dst="licenses", src=self.source_subfolder)
         
         with tools.chdir(self.source_subfolder):
-            env_build = AutoToolsBuildEnvironment(self)
+            env_build = self.configure_autotools()
             env_build.install()
 
     def package_info(self):
