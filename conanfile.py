@@ -60,6 +60,10 @@ class LibnameConan(ConanFile):
     def build(self):
         with tools.chdir(self.source_subfolder):
             env_build = self.configure_autotools()
+
+            if self.settings.compiler == "clang":
+                env_build.libs.append("clang_rt.builtins-{}".format(self.settings.arch))
+            
             if tools.os_info.is_windows:
                 vs_path = tools.vcvars_dict(self.settings).get("PATH", "")
                 tools.run_in_windows_bash(self, "./configure", env={"PATH": vs_path}, subsystem="cygwin")
