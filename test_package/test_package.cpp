@@ -13,6 +13,8 @@ int main()
         buffer << t.rdbuf();
         std::cout << "\nOutput from 'm4 --version': \n\n" << buffer.str() << "\n";
     }
+    else
+        std::cerr << "\nFailed to run command 'm4 --version'\n";
     
     return result == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
 }
