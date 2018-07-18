@@ -19,7 +19,7 @@ class LibnameConan(ConanFile):
     exports = ["LICENSE.md"]
 
     # Options may need to change depending on the packaged library.
-    settings = "os", "arch", "compiler", "build_type"
+    settings = "os", "arch", "build_type"
     options = {"fPIC": [True, False]}
     default_options = "fPIC=True"
 
@@ -53,24 +53,19 @@ class LibnameConan(ConanFile):
 
     def configure_autotools(self):
         env_build = AutoToolsBuildEnvironment(self, win_bash=tools.os_info.is_windows)
-        if not tools.os_info.is_windows:
+        if self.settings.os != "Windows":
             env_build.fpic = self.options.fPIC
+        
+        if tools.os_info.is_windows:
+            env_build.subsystem = "cygwin"
+
         return env_build
 
     def build(self):
         with tools.chdir(self.source_subfolder):
             env_build = self.configure_autotools()
-
-            if self.settings.compiler == "clang":
-                env_build.libs.append("clang_rt.builtins-{}".format(self.settings.arch))
-            
-            if tools.os_info.is_windows:
-                vs_path = tools.vcvars_dict(self.settings).get("PATH", "")
-                tools.run_in_windows_bash(self, "./configure", env={"PATH": vs_path}, subsystem="cygwin")
-                tools.run_in_windows_bash(self, "./make", env={"PATH": vs_path}, subsystem="cygwin")
-            else:
-                env_build.configure()
-                env_build.make()
+            env_build.configure()
+            env_build.make()
 
     def package(self):
         self.copy(pattern="LICENSE", dst="licenses", src=self.source_subfolder)
