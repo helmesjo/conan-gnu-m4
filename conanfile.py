@@ -12,7 +12,7 @@ class LibnameConan(ConanFile):
     url = "https://github.com/helmesjo/conan-gnu-m4"
     homepage = "https://www.gnu.org/software/m4/m4.html"
     author = "helmesjo <helmesjo@gmail.com>"
-    license = "GPL"
+    license = "GPLv3"
     exports = ["LICENSE.md"]
     
     settings = "os", "arch", "build_type"
@@ -33,7 +33,6 @@ class LibnameConan(ConanFile):
             del self.options.fPIC
 
     def source(self):
-        
         source_url = "http://ftp.gnu.org/gnu/m4/"
         extracted_dir = "m4-{}".format(self.version)
         tools.get("{}/{}.tar.gz".format(source_url, extracted_dir))
