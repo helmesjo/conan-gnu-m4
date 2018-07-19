@@ -45,8 +45,8 @@ class LibnameConan(ConanFile):
     def source(self):
         
         source_url = "http://ftp.gnu.org/gnu/m4/"
-        tools.get("{0}/m4-{1}.tar.gz".format(source_url, self.version))
-        extracted_dir = self.name + "-" + self.version
+        extracted_dir = "m4-{}".format(self.version)
+        tools.get("{}/{}.tar.gz".format(source_url, extracted_dir))
         
         # Rename to "source_subfolder" is a convention to simplify later steps
         os.rename(extracted_dir, self.source_subfolder)
