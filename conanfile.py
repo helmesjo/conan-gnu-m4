@@ -21,7 +21,6 @@ class LibnameConan(ConanFile):
     
     source_subfolder = "source_subfolder"
     build_subfolder = "build_subfolder"
-    license_filename = "gpl-3.0.md"
     
     requires = ()
 
@@ -41,8 +40,12 @@ class LibnameConan(ConanFile):
         # Rename to "source_subfolder" is a convention to simplify later steps
         os.rename(extracted_dir, self.source_subfolder)
 
+        # Extract the License/s from the header to a file
         with tools.chdir(self.source_subfolder):
-            tools.download(url="https://www.gnu.org/licenses/gpl-3.0.md", filename=self.license_filename)
+            tmp = tools.load("src/m4.h")
+            license_contents = tmp[2:tmp.find("*/", 1)] # The license begins with a C comment /* and ends with */
+            license_filename = "license-{}".format(self.name)
+            tools.save(license_filename, license_contents)
 
     def configure_autotools(self):
         env_build = AutoToolsBuildEnvironment(self, win_bash=tools.os_info.is_windows)
@@ -61,7 +64,7 @@ class LibnameConan(ConanFile):
             env_build.make()
 
     def package(self):
-        self.copy(pattern=self.license_filename, dst="licenses", src=self.source_subfolder)
+        self.copy("license*", dst="licenses", ignore_case=True, src=self.source_subfolder)
         
         with tools.chdir(self.source_subfolder):
             env_build = self.configure_autotools()
