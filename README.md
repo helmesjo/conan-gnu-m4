@@ -1,25 +1,25 @@
-[![Download](https://api.bintray.com/packages/helmesjo/public-conan/m4%3Ahelmesjo/images/download.svg) ](https://bintray.com/helmesjo/public-conan/m4%3Ahelmesjo/_latestVersion)
-[![Build Status](https://travis-ci.org/helmesjo/conan-m4.svg?branch=stable%2F1.4.18)](https://travis-ci.org/helmesjo/conan-m4)
-[![Build status](https://ci.appveyor.com/api/projects/status/github/helmesjo/conan-m4?branch=stable%2F1.4.18&svg=true)](https://ci.appveyor.com/project/helmesjo/conan-m4)
+[![Download](https://api.bintray.com/packages/helmesjo/public-conan/gnu-m4%3Ahelmesjo/images/download.svg) ](https://bintray.com/helmesjo/public-conan/gnu-m4%3Ahelmesjo/_latestVersion)
+[![Build Status](https://travis-ci.org/helmesjo/conan-gnu-m4.svg?branch=stable%2F1.4.18)](https://travis-ci.org/helmesjo/conan-gnu-m4)
+[![Build status](https://ci.appveyor.com/api/projects/status/github/helmesjo/conan-gnu-m4?branch=stable%2F1.4.18&svg=true)](https://ci.appveyor.com/project/helmesjo/conan-gnu-m4)
 
-[Conan.io](https://conan.io) package recipe for [*m4*](https://www.gnu.org/software/m4/m4.html).
+[Conan.io](https://conan.io) package recipe for [*gnu-m4*](https://www.gnu.org/software/m4/m4.html).
 
 GNU M4 is an implementation of the traditional Unix macro processor.
 
-The packages generated with this **conanfile** can be found on [Bintray](https://bintray.com/helmesjo/public-conan/m4%3Ahelmesjo).
+The packages generated with this **conanfile** can be found on [Bintray](https://bintray.com/helmesjo/public-conan/gnu-m4%3Ahelmesjo).
 
 ## For Users: Use this package
 
 ### Basic setup
 
-    $ conan install m4/1.4.18@helmesjo/stable
+    $ conan install gnu-m4/1.4.18@helmesjo/stable
 
 ### Project setup
 
 If you handle multiple dependencies in your project is better to add a *conanfile.txt*
 
     [requires]
-    m4/1.4.18@helmesjo/stable
+    gnu-m4/1.4.18@helmesjo/stable
 
 
 Complete the installation of requirements for your project running:
@@ -50,12 +50,12 @@ The following command both runs all the steps of the conan file, and publishes t
 
 ## Upload
 
-    $ conan upload m4/1.4.18@helmesjo/stable --all -r helmesjo
+    $ conan upload gnu-m4/1.4.18@helmesjo/stable --all -r helmesjo
 
 
 ## Conan Recipe License
 
-NOTE: The conan recipe license applies only to the files of this recipe, which can be used to build and package m4.
+NOTE: The conan recipe license applies only to the files of this recipe, which can be used to build and package gnu-m4.
 It does *not* in any way apply or is related to the actual software being packaged.
 
-[MIT](https://github.com/helmesjo/conan-m4.git/blob/stable/1.4.18/LICENSE)
+[MIT](https://github.com/helmesjo/conan-gnu-m4/blob/stable/1.4.18/LICENSE)
