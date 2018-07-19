@@ -6,10 +6,10 @@ import os, platform
 
 
 class LibnameConan(ConanFile):
-    name = "m4"
+    name = "gnu-m4"
     version = "1.4.18"
     description = "GNU M4 is an implementation of the traditional Unix macro processor."
-    url = "https://github.com/helmesjo/conan-m4"
+    url = "https://github.com/helmesjo/conan-gnu-m4"
     homepage = "https://www.gnu.org/software/m4/m4.html"
     author = "helmesjo <helmesjo@gmail.com>"
     # Indicates License type of the packaged library
